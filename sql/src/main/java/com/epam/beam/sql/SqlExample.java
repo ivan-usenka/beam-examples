@@ -58,6 +58,7 @@ public class SqlExample {
                         new Formation("Second", 10, 16),
                         new Formation("Third", 17, 23)
                 ));
+
         PCollection<Row> formations = pojoFormations
                 .apply(ParDo.of(new DoFn<Formation, Row>() {
                     @ProcessElement
@@ -70,9 +71,11 @@ public class SqlExample {
                     }
                 })).setSchema(formationSchema, SerializableFunctions.identity(), SerializableFunctions.identity());
 
+
         PCollectionTuple colls =
                 PCollectionTuple.of(new TupleTag<>("Logs"), logs)
                         .and(new TupleTag<>("Formations"), formations);
+
 
         PCollection<Row> result = colls.apply(SqlTransform.query(
                 "SELECT * FROM Logs l " +
@@ -107,12 +110,12 @@ public class SqlExample {
             return depth;
         }
 
-        public String getLogName() {
-            return logName;
-        }
-
         public void setDepth(int depth) {
             this.depth = depth;
+        }
+
+        public String getLogName() {
+            return logName;
         }
 
         public void setLogName(String logName) {
@@ -139,20 +142,20 @@ public class SqlExample {
             return name;
         }
 
-        public int getStartDepth() {
-            return startDepth;
-        }
-
-        public int getEndDepth() {
-            return endDepth;
-        }
-
         public void setName(String name) {
             this.name = name;
         }
 
+        public int getStartDepth() {
+            return startDepth;
+        }
+
         public void setStartDepth(int startDepth) {
             this.startDepth = startDepth;
+        }
+
+        public int getEndDepth() {
+            return endDepth;
         }
 
         public void setEndDepth(int endDepth) {
