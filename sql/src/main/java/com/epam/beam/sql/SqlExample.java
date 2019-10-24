@@ -79,7 +79,7 @@ public class SqlExample {
 
         PCollection<Row> result = colls.apply(SqlTransform.query(
                 "SELECT * FROM Logs l " +
-                        "Join Formations f ON l.depth >= f.startDepth AND l.depth < f.endDepth"));
+                        "Join Formations f ON l.depth = f.startDepth"));
 
         result
                 .apply(MapElements.via(new SimpleFunction<Row, String>() {
